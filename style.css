@@ -1,0 +1,81 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.header-container{
+    max-width: 780px;
+    font-size: x-large;
+    text-align: center;
+}
+
+.header{
+    padding: 20px;
+}
+
+.header-container p{
+    padding: 5px 0 10px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    max-width: 550px;
+    gap: 16px;
+}
+
+.button{
+    height: 200px;
+    width: 200px;
+    border-radius: 25px;
+    background-color: inherit;
+    border-style: none;
+    cursor: pointer;
+    
+}
+
+.hand{
+    font-size: 80px;
+}
+
+
+.score-container{
+    padding: 20px;
+    text-align: center;
+    max-width: 600px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.player-score, .computer-score{
+    font-weight: 900;
+}
+
+.commentary{
+    padding: 30px 0 10px;
+}
+
+.reset-button{
+    margin:10px;
+    padding: 10px;
+    color: white;
+    background-color: black;
+    font-weight: 900;
+    cursor: pointer;
+    line-height: 1.6;
+}
