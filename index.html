@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPS</title>
-    <source src="main.js" type="javascript">
+    <script src="main.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,7 +13,6 @@
         <h1 class="header">
             ROCK PAPER SCISSORS
         </h1>
-        <p>First to five wins... </p>
     </div>
     <div class="button-container">
         <button class="button" id="rock-button">
@@ -28,20 +27,19 @@
     </div>
     <div class="score-container">
         <p class="score-text">
-            <p class="player-score">
+            <p id="player-score">
             Player Score: 0
             </p>
-            <p class="computer-score"> 
+            <p id="computer-score"> 
             Computer Score: 0
             </p>
-            <p class="commentary">
-            This is where the score is displayed. It will state the human score,
-            the computer score. It will also track the rounds.
+            <p id="commentary">
+            Ready? Let's play...
             </p>
         </p>
     </div>
     <div class="reset-container">
-        <button class="reset-button">
+        <button id="reset-button">
             RESET
         </button>
     </div>

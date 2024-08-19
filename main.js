@@ -1,78 +1,95 @@
-//Counter variables
-let computerScore = 0;
-let humanScore = 0;
-let computerRoundsWon = 0;
-let humanRoundsWon = 0;
-let roundsDrawn = 0;
+document.addEventListener("DOMContentLoaded", () => {
 
-//Get human's choice
-function getHumanChoice(){
-    const choices = ["rock", "paper", "scissors"];
-    let choice = prompt("Please choose either 'rock', 'paper' or 'scissors':").toLowerCase();
-    while (!choices.includes(choice)) {
-        choice = prompt("Invalid input. Pleast enter either 'rock', 'paper' or 'scissors':").toLowerCase();
-    }
-    return choice;
-}
+    // Counter variables
+    let computerScore = 0;
+    let humanScore = 0;
 
-//Get computer's choice
-function getComputerChoice(){
-    const choices = ["rock", "paper", "scissors"];;
-    const choice = Math.floor(Math.random() * choices.length);
-    return choices[choice];
-}
+    // DOM elements
+    const rockBtn = document.getElementById("rock-button");
+    const paperBtn = document.getElementById("paper-button");
+    const scissorsBtn = document.getElementById("scissors-button");
+    const humanScoreCounter = document.getElementById("player-score");
+    const computerScoreCounter = document.getElementById("computer-score");
+    const commentary = document.getElementById("commentary");
+    const resetBtn = document.getElementById("reset-button");
 
- //Play round
-function playRound(){
-    const computer = getComputerChoice();
-    const human = getHumanChoice();
-    determineWinner(human, computer);  
-}
-//Compare choices to determine winner
-function determineWinner(humanChoice, computerChoice){
-    if(humanChoice === computerChoice){
-        console.log(`You both selected ${humanChoice}. It's a draw!`);
-        roundsDrawn++
-    } else if (
-        (humanChoice === "rock" && computerChoice === "scissors") ||
-        (humanChoice === "paper" && computerChoice === "rock") ||
-        (humanChoice === "scissors" && computerChoice === "paper") 
-    ){
-        console.log(`You chose ${humanChoice} and the comptuer chose ${computerChoice}. You win!`);
-        humanScore++;
-        humanRoundsWon++;
+    // Event listeners for buttons
+    rockBtn.addEventListener("click", () => playRound("rock", getComputerChoice()));
+    paperBtn.addEventListener("click", () => playRound("paper", getComputerChoice()));
+    scissorsBtn.addEventListener("click", () => playRound("scissors", getComputerChoice()));
+    resetBtn.addEventListener("click", () => resetGame());
 
-    } else {
-        console.log(`You chose ${humanChoice} and the comptuer chose ${computerChoice}. You lose!`);
-        computerScore++;
-        computerRoundsWon++;
-    }
-    console.log(`Your score is ${humanScore} and the computer's score is ${computerScore}.`);
-}
-
-//Play game
-function playGame(){
-    for (let i = 0; i < 5; i++){
-        console.log(`Round ${i+1}:`);
-        playRound();
+    // Play round
+    function playRound(humanChoice, computerChoice) {
+        if (humanScore < 5 && computerScore < 5) {
+            determineWinner(humanChoice, computerChoice);
+        }
+        checkForWinner();
     }
 
-    if (humanScore > computerScore) {
-        console.log(`Game summary:`);
-        console.log(`After 5 rounds, you won the game!`);
-        console.log(`You won ${humanRoundsWon} round(s), the computer won ${computerRoundsWon} round(s) and ${roundsDrawn} round(s) were a draw.`);
-        console.log(`Thanks for playing!`);
-    } else if (computerScore > humanScore) {
-        console.log(`Game summary:`);
-        console.log(`After 5 rounds, the computer won the game!`);
-        console.log(`You won ${humanRoundsWon} round(s), the computer won ${computerRoundsWon} round(s) and ${roundsDrawn} round(s) were a draw.`);
-        console.log(`Thanks for playing!`);
-    } else {
-        console.log(`Game summary:`);
-        console.log(`After 5 rounds, it's a tie game!`);
-        console.log(`You won ${humanRoundsWon} round(s), the computer won ${computerRoundsWon} round(s) and ${roundsDrawn} round(s) were a draw.`);
-        console.log(`Thanks for playing!`);
+    // Get computer's choice
+    function getComputerChoice() {
+        const choices = ["rock", "paper", "scissors"];
+        const choice = Math.floor(Math.random() * choices.length);
+        return choices[choice];
     }
-}
 
-// playGame()  
+    // Compare choices to determine winner
+    function determineWinner(humanChoice, computerChoice) {
+        if (humanChoice === computerChoice) {
+            commentary.textContent = `You both selected ${humanChoice}. It's a draw!`;
+        } else if (
+            (humanChoice === "rock" && computerChoice === "scissors") ||
+            (humanChoice === "paper" && computerChoice === "rock") ||
+            (humanChoice === "scissors" && computerChoice === "paper")
+        ) {
+            commentary.textContent = `You chose ${humanChoice} and the computer chose ${computerChoice}. You win!`;
+            humanScore++;
+        } else {
+            commentary.textContent = `You chose ${humanChoice} and the computer chose ${computerChoice}. You lose!`;
+            computerScore++;
+        }
+        updateScores();
+    }
+
+    // Update scores on the screen
+    function updateScores() {
+        humanScoreCounter.textContent = `Player Score: ${humanScore}`;
+        computerScoreCounter.textContent = `Computer Score: ${computerScore}`;
+    }
+
+    // Check if there's a winner
+    function checkForWinner() {
+        if (humanScore === 5) {
+            commentary.textContent = "Congratulations! You won the game!";
+            disableButtons();
+        } else if (computerScore === 5) {
+            commentary.textContent = "Game over! The computer won the game!";
+            disableButtons();
+        }
+    }
+
+    // Disable buttons after game ends
+    function disableButtons() {
+        rockBtn.disabled = true;
+        paperBtn.disabled = true;
+        scissorsBtn.disabled = true;
+    }
+
+    // Reset the game
+    function resetGame() {
+        computerScore = 0;
+        humanScore = 0;
+        updateScores();
+        commentary.textContent = "Game reset. Let's play again!";
+        enableButtons();
+    }
+
+    // Enable buttons for a new game
+    function enableButtons() {
+        rockBtn.disabled = false;
+        paperBtn.disabled = false;
+        scissorsBtn.disabled = false;
+    }
+
+});
